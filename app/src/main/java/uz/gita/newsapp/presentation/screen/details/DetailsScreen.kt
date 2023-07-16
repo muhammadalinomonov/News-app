@@ -162,8 +162,10 @@ class DetailsScreen(private val article: Article) : AppScreen() {
             }
             Spacer(modifier = Modifier.height(5.dp))
 
-            val index = article.content?.indexOf("...", 0)
-            Text(text = article.content!!.substring(0, index!! + 3), fontSize = 28.sp)
+            val index = article.content!!.indexOf("[", 0)
+
+//            Log.d("TTTT", index.toString())
+//            Text(text = article.content.substring(0, index)/*.substring(0, index!! + 3)*/, fontSize = 28.sp)
 
             Spacer(modifier = Modifier.height(5.dp))
             Row(modifier = Modifier.padding(5.dp)) {

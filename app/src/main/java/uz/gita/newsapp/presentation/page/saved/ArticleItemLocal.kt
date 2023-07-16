@@ -44,8 +44,10 @@ fun ArticleItemLocal(
     modifier: Modifier = Modifier,
 ) {
 
-    Card(modifier = modifier.padding(12.dp),
-        colors = CardDefaults.cardColors(Color(0xFF67C3EC))) {
+    Card(
+        modifier = modifier.padding(8.dp),
+        colors = CardDefaults.cardColors(Color(0xFF67C3EC))
+    ) {
         Column(
             modifier = Modifier
                 .padding(10.dp)
@@ -60,12 +62,12 @@ fun ArticleItemLocal(
                 )
             )
 
-            Column(modifier = Modifier.padding(12.dp)) {
-                Column(modifier = Modifier.padding(12.dp)) {
+            Column(modifier = Modifier.padding(4.dp)) {
+                Column(modifier = Modifier.padding(4.dp)) {
                     AsyncImage(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .clip(RoundedCornerShape(20.dp)),
+                            .clip(RoundedCornerShape(8.dp)),
                         model = ImageRequest.Builder(LocalContext.current)
                             .data(article.urlToImage)
                             .crossfade(true)

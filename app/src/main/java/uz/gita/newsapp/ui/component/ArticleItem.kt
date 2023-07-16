@@ -66,14 +66,15 @@ fun ArticleItem(
                 AsyncImage(
                     modifier = Modifier
                         .fillMaxWidth()
+                        .height(200.dp)
                         .clip(RoundedCornerShape(20.dp))
                         .clickable { onClick(article) },
                     model = ImageRequest.Builder(LocalContext.current)
                         .data(article.urlToImage)
                         .crossfade(true)
                         .build(),
-                    placeholder = painterResource(id = R.drawable.no_pictures),
-                    error = painterResource(id = R.drawable.noimage),
+                    placeholder = painterResource(id = R.drawable.img),
+                    error = painterResource(id = R.drawable.img),
                     contentDescription = null,
                     contentScale = ContentScale.Crop,
                 )

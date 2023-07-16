@@ -22,6 +22,7 @@ import cafe.adriel.voyager.navigator.tab.TabOptions
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 import uz.gita.newsapp.ui.component.ArticleItem
+import uz.gita.newsapp.ui.component.shimmer
 
 class CountryNewsPage : Tab {
     override val options: TabOptions
@@ -62,12 +63,7 @@ class CountryNewsPage : Tab {
 
         when (uiState.value) {
             is CountryNewsContract.UiState.Loading -> {
-                Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    CircularProgressIndicator(strokeWidth = 5.dp)
-                }
+                shimmer()
             }
 
             is CountryNewsContract.UiState.NewsData -> {
