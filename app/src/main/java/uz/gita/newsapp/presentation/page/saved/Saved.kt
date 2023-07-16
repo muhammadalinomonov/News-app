@@ -110,6 +110,8 @@ object Saved : Tab {
 
             is SaveContract.UISate.AllNewsFromLocal -> {
                 SwipeRefresh(state = swipeRefresh, onRefresh = {
+
+                    onEventDispatcher(SaveContract.Intent.Loading)
                     uiState.articles
                 }) {
                     if (uiState.articles.isEmpty()) {

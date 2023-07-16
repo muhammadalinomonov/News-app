@@ -130,4 +130,7 @@ dependencies {
     //tab row
     implementation 'androidx.compose.foundation:foundation:1.4.0-rc01'
 
+    //shimmer
+    implementation 'com.valentinilk.shimmer:compose-shimmer:1.0.5'
+
 }

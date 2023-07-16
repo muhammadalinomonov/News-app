@@ -24,6 +24,7 @@ class AllNewsViewModel @Inject constructor(
     override fun onEventDispatcher(intent: AllNewsContact.Intent) {
         when (intent) {
             is AllNewsContact.Intent.LoadNews -> {
+//                intent { reduce { AllNewsContact.UiState.Loading } }
                 repository.loadNewsBySearch(intent.search, null).onEach {
                     it.onSuccess {
                         intent {

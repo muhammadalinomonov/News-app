@@ -52,7 +52,7 @@ fun RoomDetailScreenContent(
 
     Column(
         modifier = Modifier
-            .background(Color.LightGray)
+            .background(Color.White)
             .padding(12.dp)
             .verticalScroll(state)
     ) {
@@ -93,7 +93,9 @@ fun RoomDetailScreenContent(
                             radius = 50.dp,
                             color = Color.Gray
                         ),
-                        onClick = { }
+                        onClick = {
+
+                        }
                     ),
                 painter = painterResource(id = R.drawable.bookmark_border),
                 contentDescription = ""
