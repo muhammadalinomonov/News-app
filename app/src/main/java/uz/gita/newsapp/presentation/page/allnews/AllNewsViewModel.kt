@@ -19,21 +19,25 @@ class AllNewsViewModel @Inject constructor(
     private val directions: AllNewsContact.Direction
 ) : AllNewsContact.ViewModel, ViewModel() {
     override val container =
-        container<AllNewsContact.UiState, AllNewsContact.SideEffect>(AllNewsContact.UiState.Loading)
+        container<AllNewsContact.UiState, AllNewsContact.SideEffect>(AllNewsContact.UiState.Loading(true))
 
     override fun onEventDispatcher(intent: AllNewsContact.Intent) {
         when (intent) {
             is AllNewsContact.Intent.LoadNews -> {
-//                intent { reduce { AllNewsContact.UiState.Loading } }
                 repository.loadNewsBySearch(intent.search, null).onEach {
+//                    intent { reduce { AllNewsContact.UiState.Loading } }
                     it.onSuccess {
                         intent {
                             reduce {
-                                AllNewsContact.UiState.NewsData(it)
+                                AllNewsContact.UiState.NewsData(it,false)
+
                             }
                         }
                     }
                     it.onFailure {
+                        intent{
+                            reduce { AllNewsContact.UiState.Loading(false) }
+                        }
                         intent {
                             postSideEffect(AllNewsContact.SideEffect.HasError(it.message!!))
                         }

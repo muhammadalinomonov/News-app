@@ -10,8 +10,8 @@ interface AllNewsContact {
     }
 
     sealed interface UiState {
-        object Loading : UiState
-        data class NewsData(val list: List<Article>) : UiState
+        data class Loading(val refreshState : Boolean) : UiState
+        data class NewsData(val list: List<Article>,val isRefresh: Boolean = true) : UiState
     }
 
     sealed interface SideEffect {

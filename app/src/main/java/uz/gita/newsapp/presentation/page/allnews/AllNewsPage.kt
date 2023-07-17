@@ -1,11 +1,13 @@
 package uz.gita.newsapp.presentation.page.allnews
 
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
@@ -18,6 +20,8 @@ import cafe.adriel.voyager.androidx.AndroidScreen
 import cafe.adriel.voyager.hilt.getViewModel
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabOptions
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 import uz.gita.newsapp.ui.component.ArticleItem
@@ -67,26 +71,47 @@ class AllNewsPage : Tab, AndroidScreen() {
 
         onEventDispatcher(AllNewsContact.Intent.LoadNews(search))
 
-        when (uiState.value) {
-            is AllNewsContact.UiState.Loading -> {
-                shimmer()
-            }
+        val swipeRefresh = rememberSwipeRefreshState(isRefreshing = false)
 
-            is AllNewsContact.UiState.NewsData -> {
-                LazyColumn {
-                    item {
-                        CustomSearchView(search = search, onValueChange = {
-                            search = it
-                        })
+
+        Surface {
+            SwipeRefresh(
+                state = swipeRefresh,
+                onRefresh = {
+                    Log.d("TTT", "onRefresh")
+                    onEventDispatcher(AllNewsContact.Intent.LoadNews(search))
+                }) {
+                when (val value = uiState.value) {
+                    is AllNewsContact.UiState.Loading -> {
+
+                        swipeRefresh.isRefreshing = value.refreshState
+                        shimmer()
                     }
-                    items((uiState.value as AllNewsContact.UiState.NewsData).list) {
-                        ArticleItem(article = it) { article ->
-                            onEventDispatcher.invoke(AllNewsContact.Intent.OpenDetails(article))
+
+                    is AllNewsContact.UiState.NewsData -> {
+                        swipeRefresh.isRefreshing = false
+                        LazyColumn {
+                            item {
+                                CustomSearchView(search = search, onValueChange = {
+                                    search = it
+                                })
+                            }
+                            items(value.list) {
+                                ArticleItem(article = it) { article ->
+                                    onEventDispatcher.invoke(
+                                        AllNewsContact.Intent.OpenDetails(
+                                            article
+                                        )
+                                    )
+                                }
+                            }
                         }
                     }
                 }
             }
         }
+
+
     }
 
 
